@@ -70,6 +70,7 @@ void Game::Update()
 		m_theWorld->Update( deltaSeconds );
 		UpdateCamera(deltaSeconds);
 		UpdateForPlayerDeath(deltaSeconds);
+		UpdateEventStates();
 	}
 	else if( m_gameState == GAME_STATE_PAUSE )
 	{
@@ -277,6 +278,10 @@ void Game::UpdateCamera(float deltaTime)
 
 void Game::UpdateForTitle()
 {
+	if (g_theInput->WasKeyJustPressed(KEY_ESC)) {
+		g_theApp->HandleQuitRequisted();
+	}
+
 	m_isPlayerDead = false;
 	m_sceneCountdown = 0.f;
 	m_alphaCountup = 0.f;
@@ -288,10 +293,15 @@ void Game::UpdateForTitle()
 	}
 		
 	const XboxController& controller = g_theInput->GetXboxController( 0 );
-	if( controller.IsConnected() && controller.GetButtonState( XBOX_BUTTON_ID_START ).WasJustPressed() )
-	{
-		m_gameState = GAME_STATE_PLAYING;
-		m_theWorld->StartLevel();
+	if( controller.IsConnected()){
+        if (controller.GetButtonState(XBOX_BUTTON_ID_START).WasJustPressed()) {
+            m_gameState = GAME_STATE_PLAYING;
+            m_theWorld->StartLevel();
+        }
+
+		if (controller.GetButtonState(XBOX_BUTTON_ID_BACK).WasJustPressed()) {
+			g_theApp->HandleQuitRequisted();
+		}
 	}
 }
 

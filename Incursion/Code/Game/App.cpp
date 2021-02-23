@@ -128,7 +128,6 @@ void App::Update()
         HandleQuitRequisted();
         return;
     }
-	UpdateKeyboardStates();
 
 	g_theGame->Update( );
 	g_theConsole->Update();
@@ -146,14 +145,4 @@ void App::EndFrame()
 	g_theAudio->EndFrame();
 	g_theConsole->EndFrame();
 	m_theWindow->EndFrame();
-}
-
-void App::UpdateKeyboardStates()
-{
-	//ESC quit
-	if( g_theInput->IsKeyDown( KEY_ESC ) )
-	{
-		HandleQuitRequisted();
-		return;
-	}
 }

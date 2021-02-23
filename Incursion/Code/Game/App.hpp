@@ -22,7 +22,6 @@ public:
 private:
 	void BeginFrame();
 	void Update();
-	void UpdateKeyboardStates();
 	void Render() const;
 	void EndFrame();
 
